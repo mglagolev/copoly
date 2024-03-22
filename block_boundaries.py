@@ -25,6 +25,7 @@ for imol in range(args.nmol_offset,args.nmol + args.nmol_offset):
     print(f'Seq nr. {imol}:')
     seq = data[imol]
     seq_nonzero = [atype for atype in seq if atype != 0]
+    print(f'Length {len(seq_nonzero)}')
     indexed_seq_nonzero = list(zip(range(len(seq_nonzero)), seq_nonzero))
     atypes = list(set(seq_nonzero))
     atypes.sort()
