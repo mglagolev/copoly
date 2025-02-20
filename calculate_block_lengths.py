@@ -14,7 +14,6 @@ import sys
 from matplotlib import pyplot as plt
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'mdlearn'))
-print(os.path.join(os.path.dirname(__file__), '..', 'mdlearn'))
 from sequences_encoding import block_lengths
 
 freq_avg = 1.
