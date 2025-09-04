@@ -1,15 +1,15 @@
 #!/bin/bash
 BLK_BND="${HOME}/Documents/Codes/git/copoly/block_boundaries.py"
 GEN_SEQ="${HOME}/Documents/Codes/git/copoly/convert_chain_atomtypes.py"
-GEN_DAT="${HOME}/Documents/Codes/git/mouse2/mouse2/tests/create_configuration.py"
+GEN_DAT="${HOME}/Documents/Codes/git/mouse2/create_configuration.py"
 PKL_DIR="${HOME}/q/Copoly/data/for_article"
 
-BOX="2000"
+BOX="1000" #"2000"
 DATA_NAME="0.data"
 
-NPOLY="1000"
+NPOLY="500" #"1000"
 
-FVCLS="0.85"	#"0.55 0.7 0.85"
+FVCLS="0.7"	#"0.55 0.7 0.85"
 TAILS="0.0"		#"0.5 0.375 0.25 0.125"
 
 DATA_OPTIONS=""		#"--angles"

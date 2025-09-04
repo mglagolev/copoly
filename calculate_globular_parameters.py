@@ -20,7 +20,8 @@ block_name = { '1' : 'VCL', '2' : 'VI'}
 
 
 r_probe = 0.
-n_sphere = 960
+n_sphere = 480
+default_nbins = 100
 
 radii_file = os.path.join(os.path.dirname(__file__) , 'radii.txt')
 
@@ -41,8 +42,11 @@ def calculate_atom_distributions(atoms, ref_point, nbins = None,
     max_dist = np.max(distances)
     result['Max_dist'] = max_dist
     # Distance histograms
-    frequencies, bin_edges = np.histogram(distances, bins = nbins,
+    if min is not None and max is not None:
+        frequencies, bin_edges = np.histogram(distances, bins = nbins,
                                       range = (min, max))
+    else:
+        frequencies, bin_edges = np.histogram(distances, bins = nbins)
     bin_volumes_cumul = 4./3.*np.pi*np.power(bin_edges, 3)
     bin_volumes = bin_volumes_cumul[1:] - bin_volumes_cumul[:-1]
     bin_centers = 0.5 * (bin_edges[1:] + bin_edges[:-1])
@@ -56,7 +60,7 @@ def calculate_atom_distributions(atoms, ref_point, nbins = None,
     return result
 
 
-def calculate_globule_parameters(file, nbins = None,
+def calculate_globule_parameters(file, nbins = default_nbins,
                                   min = None, max = None):
     """
     Need to calculate:
@@ -130,3 +134,22 @@ def calculate_globules_parameters(files = None, nbins = None,
                                                   min = min, max = max)
         results.append(result)
     return results
+
+
+if __name__ == "__main__":
+    import argparse
+    import json
+    import sys
+    from numpyencoder.numpyencoder import NumpyEncoder
+    parser = argparse.ArgumentParser(
+        description = 'Calculate averaged gyration radius')
+
+    parser.add_argument('file', metavar = 'DATA', type = str, nargs = 1,
+                        help = 'simulation data file')
+    
+    args = parser.parse_args()
+    
+    result = calculate_globule_parameters(args.file[0])
+    json.dump(result, sys.stdout, indent=4, sort_keys=True,
+              separators=(', ', ': '), ensure_ascii=False,
+              cls=NumpyEncoder)
